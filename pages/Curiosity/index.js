@@ -11,7 +11,7 @@ export default function Curiosity() {
   /**
    * In order to create default value for today momentJS library was used, with the format method the input comes yyyy-mm-ddT(currentTime)
    * Split the returned value using the T for time
-   * Made it a default value for the earthDate for the search to allow us to put the date from today as the initial value
+   * Made it a default value for the earthDate for the search
    */
 
   const {
