@@ -10,9 +10,14 @@ import moment from "moment";
 export default function Curiosity() {
   /**
    * In order to create default value for today momentJS library was used, with the format method the input comes yyyy-mm-ddT(currentTime)
-   * Split the returned value using the T for time
-   * Made it a default value for the earthDate for the search
+   * Split the returned value using the T for time to split the array and made it a default value for the earthDate for the search
    */
+
+  const [imageDisplayed, setImageDisplayed] = useState(marsImg);
+
+  useEffect(() => {
+    fetchRoverImage();
+  }, []);
 
   const {
     register,
@@ -24,7 +29,15 @@ export default function Curiosity() {
     },
   });
 
-  const [imageDisplayed, setImageDisplayed] = useState(marsImg);
+  const fetchRoverImage = async () => {
+    const response = await fetch(
+      "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2015-6-3&api_key=DEMO_KEY"
+    );
+    const roverImageData = await response.json();
+    console.log(roverImageData);
+  };
+
+  const onSubmit = (data) => console.log(data);
 
   const cameraOptions = [
     { id: "fhaz", description: "Front Hazard Avoidance Camera	" },
@@ -67,7 +80,7 @@ export default function Curiosity() {
         </div>
         <div className="w-1/2">
           <form
-            onSubmit={handleSubmit((data) => console.log(data))}
+            onSubmit={handleSubmit(onSubmit)}
             className="flex-col flex w-9/12 m-auto gap-8"
           >
             <input
