@@ -26,8 +26,6 @@ export default function Curiosity() {
   });
 
   const fetchRoverImage = async (urlRover) => {
-    console.log(urlRover);
-
     const response = await fetch(urlRover);
     const roverImageData = await response.json();
     const newPicture = roverImageData.photos[0].img_src;
@@ -36,11 +34,6 @@ export default function Curiosity() {
 
   const onSubmit = (data) => {
     const finalUrl = myLoader(data);
-    console.log(
-      "🚀 ~ file: index.js ~ line 39 ~ onSubmit ~ finalUrl",
-      finalUrl
-    );
-
     fetchRoverImage(finalUrl);
   };
 
@@ -49,7 +42,7 @@ export default function Curiosity() {
       "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos"
     );
     url.search = new URLSearchParams({
-      earth_date: formData.earthDate,
+      earth_date: formData.earth_date,
       camera: formData.camera,
       api_key: "x4sjVH1ZvyIIt9IXlo173TgHnFxTYmPvPi7YjKWk",
     });
@@ -57,9 +50,9 @@ export default function Curiosity() {
   };
 
   const cameraOptions = [
+    { id: "mast", description: "Mast Camera" },
     { id: "fhaz", description: "Front Hazard Avoidance Camera	" },
     { id: "rhaz", description: "Rear Hazard Avoidance Camera	" },
-    { id: "mast", description: "Mast Camera" },
     { id: "chemcam", description: "Chemistry and Camera Complex" },
     { id: "mahli", description: "Mars Hand Lens Imager	" },
     { id: "mardi", description: "Mars Descent Imager	" },
@@ -82,28 +75,29 @@ export default function Curiosity() {
   );
 
   return (
-    <section className="ml-40 mt-20 text-white">
+    <section className="ml-40 mt-10 text-white">
       <h2 className="text-sub-h1 font-barlow text-white">
         <span className="font-bold mr-2">01</span>
         See a photo from the Mars Rovers (Curiosity Camera)
       </h2>
       <div className="flex w-auto h-screen">
-        <div className="w-1/2 pl-16 pt-24 flex align-center justify-center">
-          <div className="relative w-80 h-80">
+        <div className="w-1/2 pl-16 pt-8 flex items-center justify-center">
+          <div className="relative w-full h-3/5">
             <Image
               src={imageDisplayed}
               alt={`Image of the planet Mars`}
               layout="fill"
+              className="object-cover"
             ></Image>
           </div>
         </div>
-        <div className="w-1/2">
+        <div className="w-1/2 flex items-center">
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="flex-col flex w-9/12 m-auto gap-8"
           >
             <input
-              {...register("earthDate", {
+              {...register("earth_date", {
                 required: "Earth date is required",
               })}
               type="date"
@@ -118,15 +112,16 @@ export default function Curiosity() {
       </div>
       <style jsx>{`
       input[type="date"]::-webkit-calendar-picker-indicator{
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        width: auto;
-        height: auto;
-        color: transparent;
         background: transparent;
+        bottom: 0;
+        color: transparent;
+        cursor: pointer;
+        height: auto;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: auto;
       }}`}</style>
     </section>
   );
