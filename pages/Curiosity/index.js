@@ -15,29 +15,46 @@ export default function Curiosity() {
 
   const [imageDisplayed, setImageDisplayed] = useState(marsImg);
 
-  useEffect(() => {
-    fetchRoverImage();
-  }, []);
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      earthDate: moment().format().split("T")[0],
+      earth_date: moment().format().split("T")[0],
     },
   });
 
-  const fetchRoverImage = async () => {
-    const response = await fetch(
-      "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2015-6-3&api_key=DEMO_KEY"
-    );
+  const fetchRoverImage = async (urlRover) => {
+    console.log(urlRover);
+
+    const response = await fetch(urlRover);
     const roverImageData = await response.json();
-    console.log(roverImageData);
+    const newPicture = roverImageData.photos[0].img_src;
+    setImageDisplayed(newPicture);
   };
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    const finalUrl = myLoader(data);
+    console.log(
+      "🚀 ~ file: index.js ~ line 39 ~ onSubmit ~ finalUrl",
+      finalUrl
+    );
+
+    fetchRoverImage(finalUrl);
+  };
+
+  const myLoader = (formData) => {
+    const url = new URL(
+      "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos"
+    );
+    url.search = new URLSearchParams({
+      earth_date: formData.earthDate,
+      camera: formData.camera,
+      api_key: "x4sjVH1ZvyIIt9IXlo173TgHnFxTYmPvPi7YjKWk",
+    });
+    return url.toString();
+  };
 
   const cameraOptions = [
     { id: "fhaz", description: "Front Hazard Avoidance Camera	" },
@@ -75,7 +92,8 @@ export default function Curiosity() {
           <Image
             src={imageDisplayed}
             alt={`Image of the planet Mars`}
-            placeholder="blur"
+            width={"100%"}
+            height={"100%"}
           ></Image>
         </div>
         <div className="w-1/2">
