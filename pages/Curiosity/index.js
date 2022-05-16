@@ -88,13 +88,14 @@ export default function Curiosity() {
         See a photo from the Mars Rovers (Curiosity Camera)
       </h2>
       <div className="flex w-auto h-screen">
-        <div className="w-1/2 pl-16 pt-24">
-          <Image
-            src={imageDisplayed}
-            alt={`Image of the planet Mars`}
-            width={"100%"}
-            height={"100%"}
-          ></Image>
+        <div className="w-1/2 pl-16 pt-24 flex align-center justify-center">
+          <div className="relative w-80 h-80">
+            <Image
+              src={imageDisplayed}
+              alt={`Image of the planet Mars`}
+              layout="fill"
+            ></Image>
+          </div>
         </div>
         <div className="w-1/2">
           <form
