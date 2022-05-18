@@ -1,5 +1,6 @@
 import Layout from "../../components/layout";
 import marsImg from "../../public/mars/image-mars.png";
+import europeImg from "../../public/mars/image-europa.png";
 
 import Image from "next/image";
 import react, { useState, useEffect } from "react";
@@ -28,8 +29,12 @@ export default function Curiosity() {
   const fetchRoverImage = async (urlRover) => {
     const response = await fetch(urlRover);
     const roverImageData = await response.json();
-    const newPicture = roverImageData.photos[0].img_src;
-    setImageDisplayed(newPicture);
+    const picturesOfRover = roverImageData.photos;
+    if (!picturesOfRover.length) setImageDisplayed(europeImg);
+    else {
+      let newPicture = picturesOfRover[0].img_src;
+      setImageDisplayed(newPicture);
+    }
   };
 
   const onSubmit = (data) => {
