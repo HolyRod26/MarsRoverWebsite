@@ -18,7 +18,7 @@ export default function CardRoverImg({ roverPictures }) {
   const decrementCounter = () => {
     imgCounter <= 0 ? setImgCounter(0) : setImgCounter(imgCounter - 1);
   };
-
+  /*
   const client = createClient(
     "563492ad6f917000010000015a1bea3c3ee54089b4ae8b602c4a91b4"
   );
@@ -28,10 +28,12 @@ export default function CardRoverImg({ roverPictures }) {
     let imageToDisplay = curatedPhotos[0].src.original;
     setImageDisplayed(imageToDisplay);
   };
+  */
 
   const handlerImageSource = () => {
     if (!roverPictures.length) {
       setImgFound(false);
+      setImageDisplayed(marsImg);
       // pixelPhotoLoader(1);
     } else {
       setImgFound(true);
@@ -52,24 +54,24 @@ export default function CardRoverImg({ roverPictures }) {
   }, [roverPictures]);
 
   return (
-    <article className="w-full bg-slate-600 h-4/5 mx-auto my-24">
-      <header className="p-4 text-center">
+    <article className="w-full h-4/5 bg-slate-600 mx-auto mt-12 border-solid p-12">
+      <header className="p-4 text-center h-2/10">
         {imgFound ? (
           <h2>Photos Found: {roverPictures.length}</h2>
         ) : (
           <h2>Rover Image not Found</h2>
         )}
       </header>
-      <div className="relative min-h-8/10 max-w-8/10 mx-auto">
+      <div className="relative min-h-6/10 mx-auto mt-8">
         <Image
           src={imageDisplayed}
           alt={`Image of the planet Mars`}
           layout="fill"
-          className="object-cover"
+          className="object-contain"
         />
       </div>
-      <div className="p-4"> Count: {imgCounter}</div>
-      <div className="flex justify-center gap-x-16">
+
+      <div className="flex justify-center gap-x-16 h-2/10 mt-8">
         <button className="p-4 bg-red-500" onClick={incrementCounter}>
           Next
         </button>
@@ -77,6 +79,7 @@ export default function CardRoverImg({ roverPictures }) {
           Back
         </button>
       </div>
+      <div className="p-4"> Count: {imgCounter}</div>
     </article>
   );
 }
