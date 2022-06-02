@@ -9,6 +9,6 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ["api.nasa.gov", "mars.nasa.gov"],
+    domains: ["api.nasa.gov", "mars.nasa.gov", "images.pexels.com"],
   },
 };

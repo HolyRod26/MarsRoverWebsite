@@ -43,6 +43,12 @@ module.exports = {
       backdropBlur: {
         nav: "82px",
       },
+      minHeight: {
+        "8/10": "80%",
+      },
+      maxWidth: {
+        "8/10": "80%",
+      },
     },
   },
   plugins: [require("@tailwindcss/forms")],
