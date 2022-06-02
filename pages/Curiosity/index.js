@@ -87,6 +87,10 @@ export default function Curiosity() {
   const onSubmit = (data) => {
     const finalUrl = myLoader(data);
     fetchRoverImage(finalUrl);
+    console.log(
+      "🚀 ~ file: index.js ~ line 23 ~ Curiosity ~ roverPictures",
+      roverPictures
+    );
   };
 
   const cameraOptions = [

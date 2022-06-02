@@ -1,4 +1,4 @@
-import react, { useEffect, useState } from "react";
+import react, { useEffect, useState, useReducer } from "react";
 import Image from "next/image";
 import marsImg from "../public/mars/image-mars.png";
 import { createClient } from "pexels";
@@ -9,6 +9,15 @@ export default function CardRoverImg({ roverPictures }) {
   const [imgFound, setImgFound] = useState(false);
   const [imgCounter, setImgCounter] = useState(0);
   const [imageDisplayed, setImageDisplayed] = useState(marsImg);
+
+  const incrementCounter = () => {
+    imgCounter >= roverPictures.length - 1
+      ? setImgCounter(0)
+      : setImgCounter(imgCounter + 1);
+  };
+  const decrementCounter = () => {
+    imgCounter <= 0 ? setImgCounter(0) : setImgCounter(imgCounter - 1);
+  };
 
   const client = createClient(
     "563492ad6f917000010000015a1bea3c3ee54089b4ae8b602c4a91b4"
@@ -32,15 +41,21 @@ export default function CardRoverImg({ roverPictures }) {
   };
 
   useEffect(() => {
-    // pixelPhotoLoader(1);
+    handlerImageSource();
     console.log(imageDisplayed);
-  }, []);
+    console.log("length rovers: ", roverPictures.length);
+    console.log(imgCounter);
+  }, [imgCounter]);
+
+  useEffect(() => {
+    handlerImageSource();
+  }, [roverPictures]);
 
   return (
     <article className="w-full bg-slate-600 h-4/5 mx-auto my-24">
       <header className="p-4 text-center">
         {imgFound ? (
-          <h2>Rover Image Found!!!</h2>
+          <h2>Photos Found: {roverPictures.length}</h2>
         ) : (
           <h2>Rover Image not Found</h2>
         )}
@@ -51,13 +66,16 @@ export default function CardRoverImg({ roverPictures }) {
           alt={`Image of the planet Mars`}
           layout="fill"
           className="object-cover"
-          priority={true}
         />
       </div>
-      <div className="p-4">Description of the img</div>
+      <div className="p-4"> Count: {imgCounter}</div>
       <div className="flex justify-center gap-x-16">
-        <button>Next</button>
-        <button>Back</button>
+        <button className="p-4 bg-red-500" onClick={incrementCounter}>
+          Next
+        </button>
+        <button className="p-4 bg-red-500" onClick={decrementCounter}>
+          Back
+        </button>
       </div>
     </article>
   );
