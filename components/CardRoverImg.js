@@ -54,7 +54,7 @@ export default function CardRoverImg({ roverPictures }) {
   }, [roverPictures]);
 
   return (
-    <article className="w-full h-4/5 bg-slate-600 mx-auto mt-12 border-solid p-12">
+    <article className="flex flex-col w-full min-h-9/10 bg-slate-600 mx-auto mt-12 border-solid p-12">
       <header className="p-4 text-center h-2/10">
         {imgFound ? (
           <h2>Photos Found: {roverPictures.length}</h2>
@@ -62,7 +62,7 @@ export default function CardRoverImg({ roverPictures }) {
           <h2>Rover Image not Found</h2>
         )}
       </header>
-      <div className="relative min-h-6/10 mx-auto mt-8">
+      <div className="w-full min-h-card relative mx-auto mt-8">
         <Image
           src={imageDisplayed}
           alt={`Image of the planet Mars`}
@@ -72,11 +72,11 @@ export default function CardRoverImg({ roverPictures }) {
       </div>
 
       <div className="flex justify-center gap-x-16 h-2/10 mt-8">
-        <button className="p-4 bg-red-500" onClick={incrementCounter}>
-          Next
-        </button>
         <button className="p-4 bg-red-500" onClick={decrementCounter}>
           Back
+        </button>
+        <button className="p-4 bg-red-500" onClick={incrementCounter}>
+          Next
         </button>
       </div>
       <div className="p-4"> Count: {imgCounter}</div>

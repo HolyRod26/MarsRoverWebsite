@@ -1,5 +1,5 @@
 import Layout from "../../components/layout";
-import marsImg from "../../public/mars/image-mars.png";
+
 import CardRoverImg from "../../components/CardRoverImg";
 
 import Image from "next/image";
@@ -114,14 +114,14 @@ export default function Curiosity() {
   );
 
   return (
-    <section className="ml-40 mt-10 text-white">
-      <h2 className="text-sub-h1 font-barlow text-white">
+    <section className="ml-40 mt-10 text-white h-screen">
+      <h2 className="text-sub-h1 font-barlow">
         <span className="font-bold mr-2">01</span>
         See a photo from the Mars Rovers (Curiosity Rover)
       </h2>
-      <div className="flex w-auto h-screen">
+      <div className="flex w-auto h-full">
         <div className="w-1/2 pl-16 pt-8 flex items-center justify-center">
-          <div className="relative w-full h-full">
+          <div className="flex relative min-h-8/10 w-full">
             <CardRoverImg roverPictures={roverPictures}></CardRoverImg>
           </div>
         </div>
@@ -130,13 +130,20 @@ export default function Curiosity() {
             onSubmit={handleSubmit(onSubmit)}
             className="flex-col flex w-9/12 m-auto gap-8"
           >
+            <h1 className="text-sub-h2 font-barlow">
+              Select the desired Earth Date to perform a search:
+            </h1>
             <input
               {...register("earth_date", {
                 required: "Earth date is required",
               })}
               type="date"
+              title="Select the desired date to find Rover Photos"
               className="bg-transparent w-100 relative"
             />
+            <h5 className="text-sub-h2 font-barlow">
+              Select the desired camera from the Rover Curiosity:
+            </h5>
             <select {...register("camera")} className="bg-transparent">
               {createCameraInputs}
             </select>

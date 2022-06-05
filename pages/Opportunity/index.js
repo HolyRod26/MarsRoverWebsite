@@ -1,6 +1,7 @@
 import Layout from "../../components/layout";
 import marsImg from "../../public/mars/image-mars.png";
-import europeImg from "../../public/mars/image-europa.png";
+import CardRoverImg from "../../components/CardRoverImg";
+
 import Image from "next/image";
 import react, { useState, useEffect } from "react";
 
@@ -9,10 +10,6 @@ import moment from "moment";
 import { createClient } from "pexels";
 
 export default function Opportunity() {
-  useEffect(() => {
-    curatedPhotoLoader(5);
-  }, []);
-
   const [roverPictures, setRoverPictures] = useState(marsImg);
 
   const {
@@ -43,24 +40,21 @@ export default function Opportunity() {
 
   const myLoader = (formData) => {
     const url = new URL(
-      "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos"
+      "https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos"
     );
     url.search = new URLSearchParams({
-      earth_date: formData.earth_date,
+      sol: formData.sol,
       camera: formData.camera,
       api_key: "x4sjVH1ZvyIIt9IXlo173TgHnFxTYmPvPi7YjKWk",
     });
     return url.toString();
   };
 
-  const client = createClient(
-    "563492ad6f917000010000015a1bea3c3ee54089b4ae8b602c4a91b4"
-  );
-
   /**
    * A function that takes in a parameter of per_page and returns a response from the Pexels API.
    * @param per_page - The number of photos you want to display.
    */
+  /*
   const curatedPhotoLoader = async (per_page) => {
     let pixelResponse = await client.photos.curated({ per_page });
     let curatedPhotos = pixelResponse.photos;
@@ -68,6 +62,10 @@ export default function Opportunity() {
     setRoverPictures(imageToDisplay);
   };
 
+  const client = createClient(
+    "563492ad6f917000010000015a1bea3c3ee54089b4ae8b602c4a91b4"
+  );
+*/
   const onSubmit = (data) => {
     const finalUrl = myLoader(data);
     fetchRoverImage(finalUrl);
@@ -103,12 +101,7 @@ export default function Opportunity() {
       <div className="flex w-auto h-screen">
         <div className="w-1/2 pl-16 pt-8 flex items-center justify-center">
           <div className="relative w-full h-3/5">
-            <Image
-              src={roverPictures}
-              alt={`Image of the planet Mars`}
-              layout="fill"
-              className="object-cover"
-            ></Image>
+            <CardRoverImg roverPictures={roverPictures}></CardRoverImg>
           </div>
         </div>
         <div className="w-1/2 flex items-center">
@@ -116,13 +109,15 @@ export default function Opportunity() {
             onSubmit={handleSubmit(onSubmit)}
             className="flex-col flex w-9/12 m-auto gap-8"
           >
+            <p>Enter desired sol to search</p>
             <input
-              {...register("earth_date", {
-                required: "Earth date is required",
+              {...register("sol", {
+                required: "sol input is required",
               })}
-              type="date"
+              type="number"
               className="bg-transparent w-100 relative"
             />
+            <p>Select your desired camera</p>
             <select {...register("camera")} className="bg-transparent">
               {createCameraInputs}
             </select>
@@ -150,3 +145,6 @@ export default function Opportunity() {
 Opportunity.getLayout = function getLayout(page) {
   return <Layout bg={"bg-mars"}>{page}</Layout>;
 };
+
+//TODO: Add functionality for errors in form
+//TODO: Fix if there is no image found to avoid breaking
